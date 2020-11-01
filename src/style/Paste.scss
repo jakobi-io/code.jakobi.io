@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+
+.paste-wrapper {
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+  margin-top: 30px;
+
+  .paste-details-container {
+    display: flex;
+    margin: auto 0;
+    padding-bottom: 20px;
+
+    .paste-title {
+      font-weight: bold;
+      font-size: 24px;
+      color: #212121;
+    }
+
+    .paste-right {
+      display: flex;
+      margin-left: auto;
+      margin-top: auto;
+      margin-bottom: auto;
+
+      .paste-created {
+        margin: auto 20px;
+        color: #444;
+      }
+
+      .paste-language {
+        padding: 8px 30px;
+        background-color: #1A73E8;
+        margin-right: 20px;
+        font-size: 14px;
+        color: #FFFFFF;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .paste-user {
+        height: 40px;
+        width: 40px;
+        background-color: #150808;
+        color: #FFFFFF;
+        border-radius: 3px;
+        display: flex;
+        cursor: pointer;
+
+        span {
+          margin: auto;
+        }
+      }
+    }
+  }
+
+  .paste-code {
+    display: flex;
+    flex-direction: column;
+    border-top: 4px solid #e3e3e3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .form-label {
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #1A73E8;
+      margin-bottom: 5px;
+    }
+
+    .code {
+      padding: 20px 40px;
+      background-color: rgba(#C4C4C4, .2);
+      border-radius: 3px;
+      line-height: 1.7;
+      counter-reset: line;
+
+      .line {
+        position: relative;
+        padding-left: 40px;
+
+        &:before {
+          counter-increment: line;
+          content: counter(line);
+          position: absolute;
+          left: -20px;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          color: #686868;
+        }
+      }
+    }
+  }
+
+  .paste-comments {
+    display: flex;
+    flex-direction: column;
+    border-top: 4px solid #e3e3e3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .form-label {
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #1A73E8;
+      margin-bottom: 5px;
+    }
+
+    .comments-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .comment {
+        padding: 20px 40px;
+        background-color: rgba(#C4C4C4, .2);
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        border-radius: 3px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .comment-header {
+          display: flex;
+
+          .comment-user {
+            display: flex;
+
+            .user-profile-image {
+              width: 50px;
+              height: 50px;
+              background-color: #333;
+              display: flex;
+              border-radius: 3px;
+              margin-right: 20px;
+
+              span {
+                margin: auto;
+                color: #FFFFFF;
+              }
+            }
+
+            .user-profile-name {
+              font-weight: bold;
+              font-size: 17px;
+            }
+
+            .user-profile-pastes {
+              font-weight: 500;
+              font-size: 15px;
+              color: rgba(#000000, .8);
+            }
+          }
+
+          .comment-created {
+            margin: auto 0 auto auto;
+          }
+        }
+
+        .comment-content {
+          padding-top: 40px;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

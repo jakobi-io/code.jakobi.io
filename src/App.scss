@@ -1,0 +1,23 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+.header {
+  width: 100vw;
+  height: 80px;
+  background-color: #212121;
+}
+
+.flex {
+  display: flex;
+}
+
+a, a:hover, a:visited {
+  text-decoration: none;
+}
+
+.column {
+  flex-direction: column;
+}
