@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.scss';
 
 // views
-import CreatePaste from './views/CreatePaste'
+import Create from './views/Create'
 import Paste from "./views/Paste";
 
 function App() {
@@ -14,9 +14,9 @@ function App() {
         <div className="header"/>
         <Router>
             <Switch>
-                <Route path="/" exact component={CreatePaste}/>
+                <Route path="/" exact component={Create}/>
                 <Route path="/:token" exact component={Paste}/>
-                <Route path="*" component={CreatePaste}/>
+                <Route path="*" component={Create}/>
             </Switch>
         </Router>
     </div>

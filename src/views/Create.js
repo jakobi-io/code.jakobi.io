@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 // style
 import '../style/Create.scss'
 
-class CreatePaste extends React.Component
+class Create extends React.Component
 {
 
     constructor(props) {
@@ -12,11 +13,12 @@ class CreatePaste extends React.Component
         // todo: prefill form
         this.state = {
             title: "",
-            language: "null",
-            deleteAfter: "null",
+            language: "plain",
+            deleteAfter: "day",
             code: "",
             paste: null,
             created: false,
+            user: null
         }
     }
 
@@ -51,6 +53,7 @@ class CreatePaste extends React.Component
                 history.push("/" + data.result.token)
             } else {
                 // todo: handle error
+                this.setState({ created: false, errorCode: data.status, error: data.statusText })
             }
         })
     }
@@ -67,7 +70,11 @@ class CreatePaste extends React.Component
 
             for (let i = 0; i < split.length; i++) {
                 if (split[i] === "class") {
-                    this.setState({ title: split[i+1], language: "JavaScript", deleteAfter: "1 Day"})
+                    if (this.state.title !== "") {
+                        break
+                    }
+
+                    this.setState({ title: split[i+1]})
                     break
                 }
             }
@@ -85,7 +92,22 @@ class CreatePaste extends React.Component
             </div>
 
             <div className="landing-content container">
-                <div className="landing-title">Create Paste</div>
+                <div className="landing-header">
+                    <div className="landing-title">Create Paste</div>
+                    <div className="landing-header-right">
+                        {this.state.user !== null &&
+                            <Link to={ "/user/" + (this.state.user.username ?? this.state.user.email) } className="user">
+                                <span className="user-username">{this.state.user.username ?? this.state.user.email}</span>
+                                <div className="user-profile-image" style={{backgroundImage: "url('" + this.state.user.profile_image_url + "')"}}/>
+                            </Link>
+                        }
+                        {this.state.user === null &&
+                        <div className="warning">
+                            <span>You're not logged in</span>
+                        </div>
+                        }
+                    </div>
+                </div>
                 <div className="form-wrapper">
                     <div className="form-row row">
                         <div className="form-input-container col-md-4">
@@ -94,11 +116,21 @@ class CreatePaste extends React.Component
                         </div>
                         <div className="form-input-container col-md-4">
                             <label htmlFor="language" className="form-label">Language</label>
-                            <input type="text" className="form-input" id="language" name="language" value={this.state.language} onChange={this.handleChange} />
+                            <select className="form-input" id="language" name="language" value={this.state.language} onChange={this.handleChange}>
+                                <option value="plain" selected>Plain Text</option>
+                                <option value="java">Java</option>
+                                <option value="php">PHP</option>
+                                <option value="javascript">JavaScript</option>
+                            </select>
                         </div>
                         <div className="form-input-container col-md-4">
                             <label htmlFor="deleteAfter" className="form-label">Delete After</label>
-                            <input type="text" className="form-input" id="deleteAfter" name="deleteAfter" value={this.state.deleteAfter} onChange={this.handleChange} />
+                            <select className="form-input" id="deleteAfter" name="deleteAfter" value={this.state.deleteAfter} onChange={this.handleChange}>
+                                <option value="day" selected>1 Day</option>
+                                <option value="week">1 Week</option>
+                                <option value="month">1 Month</option>
+                                <option value="year">1 Year</option>
+                            </select>
                         </div>
                     </div>
                     <div className="form-row">
@@ -118,4 +150,4 @@ class CreatePaste extends React.Component
     }
 }
 
-export default CreatePaste
+export default Create
