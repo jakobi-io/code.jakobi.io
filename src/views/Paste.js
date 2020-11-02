@@ -6,6 +6,9 @@ import Prism from 'prismjs'
 import '../style/Paste.scss'
 import "../style/prism.css";
 
+// components
+import PasteSkeleton from '../components/skelleton/PasteSkeleton.js'
+
 class Paste extends React.Component
 {
 
@@ -52,10 +55,8 @@ class Paste extends React.Component
         let paste = this.state.paste;
         let spacer = <span>&nbsp;</span>;
 
-        console.log(paste)
-
         if (paste === null) {
-            return null;
+            return <PasteSkeleton />
         } else {
             return <div className="paste-wrapper container">
                 <div className="paste-details-container">
@@ -84,30 +85,34 @@ class Paste extends React.Component
                         </pre>
                     </div>
                 </div>
-                <div className="paste-comments">
-                    <div className="form-label">Comments</div>
-                    <div className="comments-wrapper">
-                        {paste.comments.map((comment, key) => (
-                            <div className="comment" key={key}>
-                                <div className="comment-header">
-                                    <div className="comment-user">
-                                        <div className="user-profile-image" style={{ backgroundImage: "url('" + paste.user.profile_picture_url + "')" }} />
-                                        <div className="flex column">
-                                            <div className="user-profile-name">{ comment.user.username ?? comment.user.email }</div>
-                                            <div className="user-profile-pastes">0 Pastes</div>
+                { paste.comments.length > 0 &&
+                    <div className="paste-comments">
+                        <div className="form-label">Comments</div>
+                        <div className="comments-wrapper">
+                            {paste.comments.map((comment, key) => (
+                                <div className="comment" key={key}>
+                                    <div className="comment-header">
+                                        <div className="comment-user">
+                                            <div className="user-profile-image">
+                                                <span>L</span>
+                                            </div>
+                                            <div className="flex column">
+                                                <div className="user-profile-name">Lukas Jakobi</div>
+                                                <div className="user-profile-pastes">32 Pastes</div>
+                                            </div>
+                                        </div>
+                                        <div className="comment-created">
+                                            { this.formatTimestamp(comment.created_at) }
                                         </div>
                                     </div>
-                                    <div className="comment-created">
-                                        { this.formatTimestamp(comment.created_at) }
+                                    <div className="comment-content">
+                                        <span>{ this.decryptBase64(comment.message) }</span>
                                     </div>
                                 </div>
-                                <div className="comment-content">
-                                    <span>{ this.decryptBase64(comment.message) }</span>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                }
             </div>;
         }
     }

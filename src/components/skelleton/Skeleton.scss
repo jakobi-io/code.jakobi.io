@@ -1,0 +1,108 @@
+.skeleton-wrapper {
+  display: flex;
+  padding-top: 40px;
+  font-family: "Poppins", sans-serif;
+
+  .flex {
+    display: flex;
+  }
+
+  .column {
+    flex-direction: column;
+  }
+
+  .right {
+    margin-left: auto;
+  }
+
+  .skeleton-text {
+    background-color: #e3e3e3;
+    width: 400px;
+    height: 30px;
+    border-radius: 3px;
+    animation: 2s background-gradient infinite;
+    background-image: linear-gradient(90deg, #ddd 0%, #cecece 40%, #ddd 80%);
+    background-size: 500px;
+    overflow: hidden;
+  }
+
+  .skeleton-box {
+    background-color: #e3e3e3;
+    width: 150px;
+    height: 35px;
+    border-radius: 3px;
+  }
+
+  .skeleton-profile {
+    height: 40px;
+    width: 40px;
+    background-color: #e3e3e3;
+    border-radius: 3px;
+    animation: 2s background-gradient infinite;
+    background-image: linear-gradient(90deg, #ddd 0%, #cecece 40%, #ddd 80%);
+    background-size: 500px;
+    overflow: hidden;
+  }
+
+  .skeleton-subtitle {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1A73E8;
+    margin-bottom: 5px;
+  }
+
+  .brand-blue {
+    background-color: #1A73E8;
+  }
+
+  .skeleton-code {
+    padding: 20px;
+    background-color: rgba(#C4C4C4, .2);
+    margin-bottom: 30px;
+
+    .skeleton-line {
+      background-color: #e3e3e3;
+      width: 100%;
+      height: 25px;
+      margin-bottom: 6px;
+      border-radius: 3px;
+      animation: 2s background-gradient infinite;
+      background-image: linear-gradient(90deg, #ddd 0%, #cecece 40%, #ddd 80%);
+      background-size: 500px;
+      overflow: hidden;
+      margin-left: 20px;
+    }
+  }
+
+  .skeleton-comment {
+    padding: 20px;
+    background-color: rgba(#C4C4C4, .2);
+    margin-bottom: 30px;
+
+    .skeleton-line {
+      background-color: #e3e3e3;
+      width: 100%;
+      height: 25px;
+      margin-bottom: 6px;
+      border-radius: 3px;
+      animation: 2s background-gradient infinite;
+      background-image: linear-gradient(90deg, #ddd 0%, #cecece 40%, #ddd 80%);
+      background-size: 500px;
+      overflow: hidden;
+    }
+  }
+}
+
+@keyframes background-gradient {
+  0% {
+    background-position: -200%;
+  }
+
+  50% {
+    background-position: 0%;
+  }
+
+  100% {
+    background-position: 200%;
+  }
+}
