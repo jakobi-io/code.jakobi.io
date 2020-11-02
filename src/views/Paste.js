@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Prism from 'prismjs'
 
 // style
 import '../style/Paste.scss'
+import "../style/prism.css";
 
 class Paste extends React.Component
 {
@@ -16,6 +18,10 @@ class Paste extends React.Component
         }
 
         this.fetchData(this.props.match.params.token)
+    }
+
+    componentDidMount() {
+        Prism.highlightAll();
     }
 
     fetchData = (token) => {
@@ -57,23 +63,25 @@ class Paste extends React.Component
                     <div className="paste-right">
                         <div className="paste-created">{ this.formatTimestamp(paste.created_at) }</div>
                         {paste.language !== null &&
-                        <Link to={ "/language/" + paste.language.toLowerCase() } className="paste-language">
-                            <span>{paste.language}</span>
-                        </Link>
+                            <Link to={ "/language/" + paste.language.slug } className="paste-language">
+                                <span>{paste.language.displayname}</span>
+                            </Link>
                         }
-                        {paste.user !== null &&
-                        <Link to={ "/user/" + paste.userId }  className="paste-user">
-                            <span>L</span>
-                        </Link>
+                        {paste.user !== null && paste.user !== undefined &&
+                            <Link to={ "/user/" + paste.user.username }  className="paste-user" style={{ backgroundImage: "url('" + paste.user.profile_picture_url + "')" }} />
                         }
                     </div>
                 </div>
                 <div className="paste-code">
                     <div className="form-label">Code</div>
                     <div className="code">
-                        {this.decryptBase64(paste.code).split('\n').map((line, key) => (
-                            <div className="line" key={key}>{ line === "" ? spacer : line }</div>
-                        ))}
+                        <pre>
+                            {this.decryptBase64(paste.code).split('\n').map((line, key) => (
+                                <code className="language-javascript" key={key}>
+                                    {line === "" ? spacer : line}
+                                </code>
+                            ))}
+                        </pre>
                     </div>
                 </div>
                 <div className="paste-comments">
@@ -83,12 +91,10 @@ class Paste extends React.Component
                             <div className="comment" key={key}>
                                 <div className="comment-header">
                                     <div className="comment-user">
-                                        <div className="user-profile-image">
-                                            <span>L</span>
-                                        </div>
+                                        <div className="user-profile-image" style={{ backgroundImage: "url('" + paste.user.profile_picture_url + "')" }} />
                                         <div className="flex column">
-                                            <div className="user-profile-name">Lukas Jakobi</div>
-                                            <div className="user-profile-pastes">32 Pastes</div>
+                                            <div className="user-profile-name">{ comment.user.username ?? comment.user.email }</div>
+                                            <div className="user-profile-pastes">0 Pastes</div>
                                         </div>
                                     </div>
                                     <div className="comment-created">
