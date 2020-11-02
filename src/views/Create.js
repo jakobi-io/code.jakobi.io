@@ -3,7 +3,7 @@ import React from 'react'
 // style
 import '../style/Create.scss'
 
-class CreatePaste extends React.Component
+class Create extends React.Component
 {
 
     constructor(props) {
@@ -118,4 +118,4 @@ class CreatePaste extends React.Component
     }
 }
 
-export default CreatePaste
+export default Create

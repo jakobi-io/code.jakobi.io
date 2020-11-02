@@ -31,7 +31,6 @@
       .paste-language {
         padding: 8px 30px;
         background-color: #1A73E8;
-        margin-right: 20px;
         font-size: 14px;
         color: #FFFFFF;
         border-radius: 3px;
@@ -45,7 +44,10 @@
         color: #FFFFFF;
         border-radius: 3px;
         display: flex;
+        margin-left: 20px;
         cursor: pointer;
+        background-position: center;
+        background-size: cover;
 
         span {
           margin: auto;
@@ -59,7 +61,7 @@
     flex-direction: column;
     border-top: 4px solid #e3e3e3;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
 
     .form-label {
       font-weight: bold;
@@ -75,19 +77,26 @@
       line-height: 1.7;
       counter-reset: line;
 
-      .line {
-        position: relative;
-        padding-left: 40px;
+      pre {
+        display: flex;
+        flex-direction: column;
 
-        &:before {
-          counter-increment: line;
-          content: counter(line);
-          position: absolute;
-          left: -20px;
-          top: 0;
-          bottom: 0;
-          margin: auto;
-          color: #686868;
+        code {
+          position: relative;
+          padding-left: 60px;
+          display: flex;
+
+          &:before {
+            counter-increment: line;
+            content: counter(line);
+            position: absolute;
+            left: 0px;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            color: #686868;
+            z-index: 999;
+          }
         }
       }
     }
@@ -136,6 +145,8 @@
               display: flex;
               border-radius: 3px;
               margin-right: 20px;
+              background-position: center;
+              background-size: cover;
 
               span {
                 margin: auto;
