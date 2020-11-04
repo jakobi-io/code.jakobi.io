@@ -9,7 +9,8 @@ class Header extends React.Component
         super(props);
 
         this.state = {
-            user: null
+            user: null,
+            loading: true,
         }
 
         fetch(process.env.REACT_APP_ACCOUNTS_API_BASE_URL + "user", {
@@ -21,7 +22,9 @@ class Header extends React.Component
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                this.setState({ user: data.result })
+                this.setState({ user: data.result, loading: false })
+            } else {
+                this.setState({ loading: false })
             }
         })
     }
@@ -46,13 +49,13 @@ class Header extends React.Component
                         <NavLink to="/my-code" activeClassName="is-active" className="navigation-item">My Code</NavLink>
                     </div>
                     <div className="header-profile">
-                        {this.state.user !== null &&
+                        {!this.state.loading && this.state.user !== null &&
                             <a href={process.env.REACT_APP_ACCOUNTS_BASE_URL + "@" + this.state.user.username} className="user">
                                 <span className="user-username">{this.state.user.username ?? this.state.user.email}</span>
                                 <div className="user-profile-image" style={{backgroundImage: "url('" + this.state.user.profile_picture_url + "')"}}/>
                             </a>
                         }
-                        {this.state.user === null &&
+                        {!this.state.loading && this.state.user === null &&
                             <div className="cta-login" onClick={() => { this.redirectAuthentication() }}>
                                 <span>Sign In</span>
                             </div>

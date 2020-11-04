@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Grid } from '@agney/react-loading'
 
 // style
 import '../style/Create.scss'
@@ -157,7 +157,7 @@ class Create extends React.Component
             }
             {this.state.loading &&
                 <div className="landing-loading">
-                    <span>Fetching all the data</span>
+                    <Grid width="100px" />
                 </div>
             }
         </div>

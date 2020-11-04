@@ -60,7 +60,8 @@
     pre {
       display: flex;
       flex-direction: column;
-      margin-bottom: 0;
+      margin: 0;
+      padding: 0;
 
       code {
         position: relative;
@@ -80,6 +81,34 @@
         }
       }
     }
+  }
+}
+
+.comment-add {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 30px;
+
+  .comment-input {
+    margin-left: 20px;
+    width: 100%;
+    padding: 10px 30px;
+  }
+}
+
+.user-profile-image {
+  width: 50px;
+  height: 50px;
+  background-color: #222222;
+  display: flex;
+  border-radius: 3px;
+  background-position: center;
+  background-size: cover;
+
+  span {
+    margin: auto;
+    color: #FFFFFF;
   }
 }
 
@@ -118,27 +147,20 @@
 
         .comment-user {
           display: flex;
+          cursor: pointer;
 
-          .user-profile-image {
-            width: 50px;
-            height: 50px;
-            background-color: transparent;
-            display: flex;
-            border-radius: 3px;
-            margin-right: 20px;
-            background-position: center;
-            background-size: cover;
-
-            span {
-              margin: auto;
-              color: #FFFFFF;
-            }
+          .flex.column {
+            padding: 0 20px;
+            background-color: rgba(#C4C4C4, .2);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
           }
 
           .user-profile-name {
             font-weight: bold;
-            font-size: 17px;
+            font-size: 16px;
             margin: auto 0;
+            color: #222222;
           }
 
           .user-profile-pastes {
@@ -156,7 +178,7 @@
       }
 
       .comment-content {
-        padding-top: 40px;
+        padding-top: 20px;
         font-size: 18px;
         color: #444;
       }
