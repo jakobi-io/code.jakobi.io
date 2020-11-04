@@ -16,6 +16,7 @@ class Paste extends React.Component
         super(props);
 
         this.state = {
+            error: false,
             token: this.props.match.params.token,
             paste: null
         }
@@ -28,7 +29,7 @@ class Paste extends React.Component
     }
 
     fetchData = (token) => {
-        fetch("http://localhost:8000/paste/" + token, {
+        fetch(process.env.REACT_APP_API_BASE_URL + "paste/" + token, {
             method: "GET"
         })
             .then(res => res.json())
@@ -38,6 +39,12 @@ class Paste extends React.Component
                         token: token,
                         paste: data.result
                     })
+
+                    // change window title
+                    document.title = (data.result.description !== "" ? this.decryptBase64(data.result.description) : "Untitled") + " | Code | by jakobi.io";
+                } else {
+                    // todo: handle error
+                    this.setState({ error: true })
                 }
             })
     }
@@ -58,25 +65,31 @@ class Paste extends React.Component
         if (paste === null) {
             return <PasteSkeleton />
         } else {
-            return <div className="paste-wrapper container">
-                <div className="paste-details-container">
-                    <div className="paste-title">{ this.decryptBase64(paste.description) }</div>
-                    <div className="paste-right">
+            if (this.state.error) {
+                return <div className="error">
+
+                </div>
+            }
+
+            return <div className="content-wrapper container">
+                <div className="content-title-wrapper">
+                    <div className="content-title">{ paste.description !== "" ? this.decryptBase64(paste.description) : "Untitled" }</div>
+                    <div className="content-title-actions align-right">
                         <div className="paste-created">{ this.formatTimestamp(paste.created_at) }</div>
                         {paste.language !== null &&
-                            <Link to={ "/language/" + paste.language.slug } className="paste-language">
+                            <div className="paste-language">
                                 <span>{paste.language.displayname}</span>
-                            </Link>
+                            </div>
                         }
                         {paste.user !== null && paste.user !== undefined &&
-                            <Link to={ "/user/" + paste.user.username }  className="paste-user" style={{ backgroundImage: "url('" + paste.user.profile_picture_url + "')" }} />
+                            <a href={process.env.REACT_APP_ACCOUNTS_BASE_URL + "@" + paste.user.username } target="_blank" className="paste-user" style={{ backgroundImage: "url('" + paste.user.profile_picture_url + "')" }} />
                         }
                     </div>
                 </div>
                 <div className="paste-code">
                     <div className="form-label">Code</div>
                     <div className="code">
-                        <pre>
+                        <pre className="language-javascript">
                             {this.decryptBase64(paste.code).split('\n').map((line, key) => (
                                 <code className="language-javascript" key={key}>
                                     {line === "" ? spacer : line}
@@ -86,34 +99,31 @@ class Paste extends React.Component
                     </div>
                 </div>
                 { paste.comments.length > 0 &&
-                    <div className="paste-comments">
-                        <div className="form-label">Comments</div>
-                        <div className="comments-wrapper">
-                            {paste.comments.map((comment, key) => (
-                                <div className="comment" key={key}>
-                                    <div className="comment-header">
-                                        <div className="comment-user">
-                                            <div className="user-profile-image">
-                                                <span>L</span>
-                                            </div>
-                                            <div className="flex column">
-                                                <div className="user-profile-name">Lukas Jakobi</div>
-                                                <div className="user-profile-pastes">32 Pastes</div>
-                                            </div>
-                                        </div>
-                                        <div className="comment-created">
-                                            { this.formatTimestamp(comment.created_at) }
+                <div className="paste-comments">
+                    <div className="form-label">Comments</div>
+                    <div className="comments-wrapper">
+                        {paste.comments.map((comment, key) => (
+                            <div className="comment" key={key}>
+                                <div className="comment-header">
+                                    <div className="comment-user">
+                                        <div className="user-profile-image" style={{ backgroundImage: "url('" + (comment.user !== null ? (comment.user.profile_picture_url ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png") : "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1200px-User_font_awesome.svg.png") + "')" }} />
+                                        <div className="flex column">
+                                            <div className="user-profile-name">{ comment.user.username ?? comment.user.email }</div>
                                         </div>
                                     </div>
-                                    <div className="comment-content">
-                                        <span>{ this.decryptBase64(comment.message) }</span>
+                                    <div className="comment-created">
+                                        { this.formatTimestamp(comment.created_at) }
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                                <div className="comment-content">
+                                    <span>{ this.decryptBase64(comment.message) }</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
+                </div>
                 }
-            </div>;
+            </div>
         }
     }
 }

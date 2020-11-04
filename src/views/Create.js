@@ -14,12 +14,28 @@ class Create extends React.Component
         this.state = {
             title: "",
             language: "plain",
-            deleteAfter: "day",
+            deleteAfter: "never",
             code: "",
             paste: null,
             created: false,
-            user: null
+            user: null,
+            loading: true
         }
+
+        fetch(process.env.REACT_APP_ACCOUNTS_API_BASE_URL + "user", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("oauth.token")
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                this.setState({ user: data.result, loading: false })
+            } else {
+                this.setState({ loading: false })
+            }
+        })
     }
 
     handleSubmit = () => {
@@ -36,16 +52,17 @@ class Create extends React.Component
             formData.append(k, params[k]);
         }
 
-        fetch("http://localhost:8000/paste", {
+        fetch(process.env.REACT_APP_API_BASE_URL + "paste", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-                "Authorization": "Bearer 111" // todo: bearer
+                "Authorization": "Bearer " + localStorage.getItem("oauth.token")
             },
             body: formData
         })
         .then(res => res.json())
         .then(data => {
+            console.log(data)
             if (data.success) {
                 let history = this.props.history;
 
@@ -86,28 +103,18 @@ class Create extends React.Component
     }
 
     render() {
-        return <div className="landing-wrapper">
-            <div className="header">
-
-            </div>
-
-            <div className="landing-content container">
-                <div className="landing-header">
-                    <div className="landing-title">Create Paste</div>
-                    <div className="landing-header-right">
-                        {this.state.user !== null &&
-                            <Link to={ "/user/" + (this.state.user.username ?? this.state.user.email) } className="user">
-                                <span className="user-username">{this.state.user.username ?? this.state.user.email}</span>
-                                <div className="user-profile-image" style={{backgroundImage: "url('" + this.state.user.profile_image_url + "')"}}/>
-                            </Link>
-                        }
-                        {this.state.user === null &&
+        return <div className="content-wrapper container">
+            <div className="content-title-wrapper">
+                <div className="content-title">Share some code, it's free!</div>
+                <div className="content-title-actions align-right">
+                    { !this.state.loading && this.state.user === null &&
                         <div className="warning">
                             <span>You're not logged in</span>
                         </div>
-                        }
-                    </div>
+                    }
                 </div>
+            </div>
+            { !this.state.loading &&
                 <div className="form-wrapper">
                     <div className="form-row row">
                         <div className="form-input-container col-md-4">
@@ -126,6 +133,8 @@ class Create extends React.Component
                         <div className="form-input-container col-md-4">
                             <label htmlFor="deleteAfter" className="form-label">Delete After</label>
                             <select className="form-input" id="deleteAfter" name="deleteAfter" value={this.state.deleteAfter} onChange={this.handleChange}>
+                                <option value="never">Never</option>
+                                <option value="hour">1 Hour</option>
                                 <option value="day" selected>1 Day</option>
                                 <option value="week">1 Week</option>
                                 <option value="month">1 Month</option>
@@ -145,7 +154,12 @@ class Create extends React.Component
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+            {this.state.loading &&
+                <div className="landing-loading">
+                    <span>Fetching all the data</span>
+                </div>
+            }
         </div>
     }
 }
