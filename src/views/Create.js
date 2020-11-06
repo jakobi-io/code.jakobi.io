@@ -4,6 +4,10 @@ import { Grid } from '@agney/react-loading'
 // style
 import '../style/Create.scss'
 
+// font awesome icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+
 class Create extends React.Component
 {
 
@@ -129,6 +133,7 @@ class Create extends React.Component
                                 <option value="php">PHP</option>
                                 <option value="javascript">JavaScript</option>
                             </select>
+                            <FontAwesomeIcon icon={faAngleDown} />
                         </div>
                         <div className="form-input-container col-md-4">
                             <label htmlFor="deleteAfter" className="form-label">Delete After</label>
@@ -140,6 +145,7 @@ class Create extends React.Component
                                 <option value="month">1 Month</option>
                                 <option value="year">1 Year</option>
                             </select>
+                            <FontAwesomeIcon icon={faAngleDown} />
                         </div>
                     </div>
                     <div className="form-row">

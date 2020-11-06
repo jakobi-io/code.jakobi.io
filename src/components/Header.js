@@ -12,7 +12,9 @@ class Header extends React.Component
             user: null,
             loading: true,
         }
+    }
 
+    componentDidMount() {
         fetch(process.env.REACT_APP_ACCOUNTS_API_BASE_URL + "user", {
             method: "GET",
             headers: {
