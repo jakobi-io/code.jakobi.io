@@ -20,26 +20,8 @@ class Create extends React.Component
             language: "plain",
             deleteAfter: "never",
             code: "",
-            paste: null,
-            created: false,
-            user: null,
-            loading: true
+            loading: false
         }
-
-        fetch(process.env.REACT_APP_ACCOUNTS_API_BASE_URL + "user", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("oauth.token")
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                this.setState({ user: data.result, loading: false })
-            } else {
-                this.setState({ loading: false })
-            }
-        })
     }
 
     handleSubmit = () => {
@@ -70,7 +52,7 @@ class Create extends React.Component
             if (data.success) {
                 let history = this.props.history;
 
-                this.setState({ created: true, paste: data.result })
+                this.setState({ created: true })
                 history.push("/" + data.result.token)
             } else {
                 // todo: handle error
@@ -118,54 +100,47 @@ class Create extends React.Component
                     }
                 </div>
             </div>
-            { !this.state.loading &&
-                <div className="form-wrapper">
-                    <div className="form-row row">
-                        <div className="form-input-container col-md-4">
-                            <label htmlFor="title" className="form-label">Title</label>
-                            <input type="text" className="form-input" id="title" name="title" placeholder="Class Name or Title" value={this.state.title} onChange={this.handleChange} />
-                        </div>
-                        <div className="form-input-container col-md-4">
-                            <label htmlFor="language" className="form-label">Language</label>
-                            <select className="form-input" id="language" name="language" value={this.state.language} onChange={this.handleChange}>
-                                <option value="plain" selected>Plain Text</option>
-                                <option value="java">Java</option>
-                                <option value="php">PHP</option>
-                                <option value="javascript">JavaScript</option>
-                            </select>
-                            <FontAwesomeIcon icon={faAngleDown} />
-                        </div>
-                        <div className="form-input-container col-md-4">
-                            <label htmlFor="deleteAfter" className="form-label">Delete After</label>
-                            <select className="form-input" id="deleteAfter" name="deleteAfter" value={this.state.deleteAfter} onChange={this.handleChange}>
-                                <option value="never">Never</option>
-                                <option value="hour">1 Hour</option>
-                                <option value="day" selected>1 Day</option>
-                                <option value="week">1 Week</option>
-                                <option value="month">1 Month</option>
-                                <option value="year">1 Year</option>
-                            </select>
-                            <FontAwesomeIcon icon={faAngleDown} />
-                        </div>
+            <div className="form-wrapper">
+                <div className="form-row row">
+                    <div className="form-input-container col-md-4">
+                        <label htmlFor="title" className="form-label">Title</label>
+                        <input type="text" className="form-input" id="title" name="title" placeholder="Class Name or Title" value={this.state.title} onChange={this.handleChange} />
                     </div>
-                    <div className="form-row">
-                        <div className="form-input-container full-width">
-                            <label htmlFor="code" className="form-label">Code</label>
-                            <textarea className="form-input" id="code" name="code" placeholder="Enter some code ..." value={this.state.code} onChange={this.handleChange} />
-                        </div>
+                    <div className="form-input-container col-md-4">
+                        <label htmlFor="language" className="form-label">Language</label>
+                        <select className="form-input" id="language" name="language" value={this.state.language} onChange={this.handleChange}>
+                            <option value="plain" selected>Plain Text</option>
+                            <option value="java">Java</option>
+                            <option value="php">PHP</option>
+                            <option value="javascript">JavaScript</option>
+                        </select>
+                        <FontAwesomeIcon icon={faAngleDown} />
                     </div>
-                    <div className="form-row">
-                        <div className="form-input-container right">
-                            <input type="submit" className="form-submit" value="Create" onClick={() => {this.handleSubmit()}}/>
-                        </div>
+                    <div className="form-input-container col-md-4">
+                        <label htmlFor="deleteAfter" className="form-label">Delete After</label>
+                        <select className="form-input" id="deleteAfter" name="deleteAfter" value={this.state.deleteAfter} onChange={this.handleChange}>
+                            <option value="never">Never</option>
+                            <option value="hour">1 Hour</option>
+                            <option value="day" selected>1 Day</option>
+                            <option value="week">1 Week</option>
+                            <option value="month">1 Month</option>
+                            <option value="year">1 Year</option>
+                        </select>
+                        <FontAwesomeIcon icon={faAngleDown} />
                     </div>
                 </div>
-            }
-            {this.state.loading &&
-                <div className="landing-loading">
-                    <Grid width="100px" />
+                <div className="form-row">
+                    <div className="form-input-container full-width">
+                        <label htmlFor="code" className="form-label">Code</label>
+                        <textarea className="form-input" id="code" name="code" placeholder="Enter some code ..." value={this.state.code} onChange={this.handleChange} />
+                    </div>
                 </div>
-            }
+                <div className="form-row">
+                    <div className="form-input-container right">
+                        <input type="submit" className="form-submit" value="Create" onClick={() => {this.handleSubmit()}}/>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 }
