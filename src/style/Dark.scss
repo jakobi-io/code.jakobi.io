@@ -1,0 +1,15 @@
+body {
+  background-color: #111111;
+}
+
+.content-title, .form-input, .paste-created, .paste-language, code {
+  color: #FFFFFF !important;
+}
+
+.paste-language, .form-input {
+  background-color: rgba(#C4C4C4, .07) !important;
+}
+
+.skeleton-text, .skeleton-box, .skeleton-code {
+  opacity: .2;
+}

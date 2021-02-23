@@ -34,40 +34,25 @@
     margin: auto 0 auto 20px;
     color: #444;
     font-weight: 600;
+    padding-right: 20px;
+    border-right: 2px solid #e3e3e3;
   }
 
   .paste-language {
-    padding: 8px 30px;
-    background-color: #1A73E8;
-    font-size: 14px;
-    color: #FFFFFF;
+    padding: 5px 20px;
+    background-color: rgba(#C4C4C4, .2);
+    font-size: 15px;
+    color: #444;
     border-radius: 3px;
     margin-left: 20px;
     font-weight: 600;
-  }
-
-  .paste-user {
-    height: 40px;
-    width: 40px;
-    background-color: #150808;
-    color: #FFFFFF;
-    border-radius: 3px;
-    display: flex;
-    margin-left: 20px;
-    cursor: pointer;
-    background-position: center;
-    background-size: cover;
-
-    span {
-      margin: auto;
-    }
   }
 }
 
 .paste-code {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 50px;
   padding-bottom: 30px;
 
   .form-label {
@@ -89,6 +74,8 @@
       flex-direction: column;
       margin: 0;
       padding: 0;
+      background: transparent;
+      overflow-y: hidden;
 
       code {
         position: relative;
@@ -99,7 +86,7 @@
           counter-increment: line;
           content: counter(line);
           position: absolute;
-          left: 0px;
+          left: 0;
           top: 0;
           bottom: 0;
           margin: auto;
@@ -111,104 +98,12 @@
   }
 }
 
-.comment-add {
-  display: flex;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 30px;
-
-  .comment-input {
-    margin-left: 20px;
-    width: 100%;
-    padding: 10px 30px;
+@media (max-width: 992px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
   }
-}
-
-.user-profile-image {
-  width: 50px;
-  height: 50px;
-  background-color: #222222;
-  display: flex;
-  border-radius: 3px;
-  background-position: center;
-  background-size: cover;
-
-  span {
-    margin: auto;
-    color: #FFFFFF;
-  }
-}
-
-.paste-comments {
-  display: flex;
-  flex-direction: column;
-  border-top: 4px solid #e3e3e3;
-  padding-top: 20px;
-  padding-bottom: 20px;
-
-  .form-label {
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #1A73E8;
-    margin-bottom: 5px;
-  }
-
-  .comments-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    .comment {
-      padding: 20px 40px;
-      background-color: rgba(#C4C4C4, .2);
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 20px;
-      border-radius: 3px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      .comment-header {
-        display: flex;
-
-        .comment-user {
-          display: flex;
-          cursor: pointer;
-
-          .flex.column {
-            padding: 0 20px;
-            background-color: rgba(#C4C4C4, .2);
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-          }
-
-          .user-profile-name {
-            font-weight: bold;
-            font-size: 16px;
-            margin: auto 0;
-            color: #222222;
-          }
-
-          .user-profile-pastes {
-            font-weight: 500;
-            font-size: 15px;
-            color: rgba(#000000, .8);
-          }
-        }
-
-        .comment-created {
-          margin: auto 0 auto auto;
-          font-weight: 600;
-          font-size: 15px;
-        }
-      }
-
-      .comment-content {
-        padding-top: 20px;
-        font-size: 18px;
-        color: #444;
-      }
-    }
+  .content-title-actions {
+    display: none !important;
   }
 }

@@ -28,9 +28,17 @@
 
   .skeleton-box {
     background-color: #e3e3e3;
-    width: 150px;
-    height: 40px;
+    width: 100px;
+    height: 30px;
     border-radius: 3px;
+
+    &.date {
+      width: 200px;
+    }
+
+    &.views {
+      width: 50px;
+    }
   }
 
   .skeleton-profile {
@@ -99,7 +107,7 @@
   }
 
   50% {
-    background-position: 0%;
+    background-position: 0;
   }
 
   100% {
